@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Central Identification Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .top-nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .top-nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            background-color: #ddd;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .tab.active {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Tools</a>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to the Central Identification Platform</h1>
+        <div class="tab-container">
+            <a class="tab active" onclick="showContent(0)">About</a>
+            <a class="tab" onclick="showContent(1)">Sign Up</a>
+            <a class="tab" onclick="showContent(2)">Login</a>
+        </div>
+        <div class="content active">
+            <p>This platform is designed to provide a centralized system for collecting and managing personal identification data.</p>
+            <p>With our secure and reliable system, you can ensure efficient identification and verification processes.</p>
+        </div>
+        <div class="content">
+            <div class="btn-container">
+                <a class="btn" href="/collect-data/">Sign Up</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="btn-container">
+                <a class="btn" href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(index) {
+            var tabs = document.getElementsByClassName("tab");
+            var contents = document.getElementsByClassName("content");
+
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+                contents[i].classList.remove("active");
+            }
+
+            tabs[index].classList.add("active");
+            contents[index].classList.add("active");
+        }
+    </script>
+</body>
+</html>
