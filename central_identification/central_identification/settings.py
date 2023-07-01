@@ -86,6 +86,10 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'central_identification.backends.biometric_auth_backend.BiometricAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # Password validation

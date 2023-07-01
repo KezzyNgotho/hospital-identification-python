@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Person, Student
+from django.contrib.auth import authenticate, login
 
 def home_view(request):
     return render(request, 'home.html')
@@ -31,26 +32,25 @@ def collect_data(request):
     return render(request, 'data_collection.html')
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from .models import Student
+
 def login(request):
     if request.method == 'POST':
-        # Perform the login authentication logic here
-       
         fingerprint = request.POST.get('fingerprint')
         eye_data = request.POST.get('eye_data')
         face_data = request.POST.get('face_data')
         voice_data = request.POST.get('voice_data')
 
-        # Add your biometric authentication code here
-        try:
-            student = Student.objects.get( person__fingerprint=fingerprint, person__eye_data=eye_data, person__face_data=face_data, person__voice_data=voice_data)
-            welcome_message = True
-            return render(request, 'login.html', {'welcome_message': welcome_message, 'username': username})
-        except Student.DoesNotExist:
+        user = authenticate(request, fingerprint=fingerprint, eye_data=eye_data, face_data=face_data, voice_data=voice_data)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
             # Biometric authentication failed
-            pass
-
-        # If the login is successful, redirect to the home view
-        return redirect('home')
+            return render(request, 'login.html', {'error_message': 'Invalid biometric data'})
 
     # Render the login template
     return render(request, 'login.html')
+
