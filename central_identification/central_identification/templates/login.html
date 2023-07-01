@@ -16,6 +16,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top:50px;
         }
 
         h1 {
@@ -53,9 +54,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Login</h1>
+        {% if welcome_message %}
+            <p>Welcome, {{ username }}!</p>
+        {% endif %}
         <form method="post">
             {% csrf_token %}
             <label for="username">Username:</label>
@@ -63,6 +68,18 @@
 
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required><br>
+
+            <label for="fingerprint">Fingerprint:</label>
+            <input type="text" name="fingerprint" id="fingerprint" required><br>
+
+            <label for="eye_data">Eye Data:</label>
+            <input type="text" name="eye_data" id="eye_data" required><br>
+
+            <label for="face_data">Face Data:</label>
+            <input type="text" name="face_data" id="face_data" required><br>
+
+            <label for="voice_data">Voice Data:</label>
+            <input type="text" name="voice_data" id="voice_data" required><br>
 
             <input type="submit" value="Login">
         </form>

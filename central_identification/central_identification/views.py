@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Person
+from .models import Person, Student
 
 def home_view(request):
     return render(request, 'home.html')
@@ -7,8 +7,6 @@ def home_view(request):
 def collect_data(request):
     if request.method == 'POST':
         # Process the form data and save it to the database
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
         fingerprint = request.POST.get('fingerprint')
         eye_data = request.POST.get('eye_data')
         face_data = request.POST.get('face_data')
@@ -17,8 +15,6 @@ def collect_data(request):
         location = request.POST.get('location')
 
         person = Person(
-            first_name=first_name,
-            last_name=last_name,
             fingerprint=fingerprint,
             eye_data=eye_data,
             face_data=face_data,
@@ -34,13 +30,24 @@ def collect_data(request):
     # Render the data collection form
     return render(request, 'data_collection.html')
 
+
 def login(request):
     if request.method == 'POST':
         # Perform the login authentication logic here
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+       
+        fingerprint = request.POST.get('fingerprint')
+        eye_data = request.POST.get('eye_data')
+        face_data = request.POST.get('face_data')
+        voice_data = request.POST.get('voice_data')
 
-        # Add your authentication code here
+        # Add your biometric authentication code here
+        try:
+            student = Student.objects.get( person__fingerprint=fingerprint, person__eye_data=eye_data, person__face_data=face_data, person__voice_data=voice_data)
+            welcome_message = True
+            return render(request, 'login.html', {'welcome_message': welcome_message, 'username': username})
+        except Student.DoesNotExist:
+            # Biometric authentication failed
+            pass
 
         # If the login is successful, redirect to the home view
         return redirect('home')
